@@ -1,9 +1,10 @@
 from pathlib import Path
+from PIL import Image
 
 def get_modified_time(f):
     return f.stat().st_mtime
 
-def get_recent_screenshots(folder, n=10):
+def get_recent_screenshots(folder, n=10): #n =  defined so that if the user didnt pass any parameter so it has a default value to work with
     folder = Path(folder)
 
 
@@ -18,6 +19,11 @@ def get_recent_screenshots(folder, n=10):
     screen_shots = screen_shots[:n] #sliced
 
     return screen_shots
+
+
+def make_thubnail(source , thumb_folder , size = (200,200)):
+    source = Path(source)
+    
 
 if __name__ == "__main__":
     shots = get_recent_screenshots(r"C:\Users\T  A  N  A  Y\Pictures\Screenshots", 5)
