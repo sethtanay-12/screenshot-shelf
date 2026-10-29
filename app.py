@@ -23,10 +23,17 @@ def get_recent_screenshots(folder, n=10): #n =  defined so that if the user didn
 
 def make_thumbnail(source , thumb_folder , size = (200,200)):
     source = Path(source)
-    thumb_folder = Path(thumb_folder)
+    thumb_folder = Path(thumb_folder)#to convert the text string address into a python readable path
 
-    thumb_folder.mkdir(exist_ok=True)
+    thumb_folder.mkdir(exist_ok=True)#makes the .thumb folder for the screenshots to live in & once made -> ignores afterwards
     thumb_path = thumb_folder / source.name
+
+    if thumb_path.exists():
+        return thumb_path
+
+    with Image.open(source) as img:
+        img.thumbnail((size))
+        img.save(thumb_path)
 
     return thumb_path
 
@@ -34,5 +41,5 @@ def make_thumbnail(source , thumb_folder , size = (200,200)):
 
 if __name__ == "__main__":
     shots = get_recent_screenshots(r"C:\Users\T  A  N  A  Y\Pictures\Screenshots", 5)
-    path = make_thumbnail(shots[0], r"D:\Projects\screenshot-shelf\.thumbs")
-    print(path)
+    for s in shots:
+        print(make_thumbnail(s, r"D:\Projects\screenshot-shelf\.thumbs"))
