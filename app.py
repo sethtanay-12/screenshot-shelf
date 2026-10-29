@@ -21,11 +21,18 @@ def get_recent_screenshots(folder, n=10): #n =  defined so that if the user didn
     return screen_shots
 
 
-def make_thubnail(source , thumb_folder , size = (200,200)):
+def make_thumbnail(source , thumb_folder , size = (200,200)):
     source = Path(source)
+    thumb_folder = Path(thumb_folder)
+
+    thumb_folder.mkdir(exist_ok=True)
+    thumb_path = thumb_folder / source.name
+
+    return thumb_path
+
     
 
 if __name__ == "__main__":
     shots = get_recent_screenshots(r"C:\Users\T  A  N  A  Y\Pictures\Screenshots", 5)
-    for s in shots:
-        print(s.name)
+    path = make_thumbnail(shots[0], r"D:\Projects\screenshot-shelf\.thumbs")
+    print(path)
